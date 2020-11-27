@@ -1,0 +1,131 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      Groups
+    </div>
+    <div class="card-body">
+      <button type="button" class="btn btn-primary mr-1 mb-5 mt-2" data-toggle="modal" (click)="modal.show()">
+        Add New Item
+      </button>
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table">
+        <thead>
+        <tr>
+          <th>id</th>
+          <th>Name</th>
+          <th>Group Type</th>
+          <th>Maximum Members</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of groups;index as i">
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ getGroupTypeName(item.group_type_id) }}</td>
+          <td>{{ item.maximum_members}}</td>
+          <td>
+            <a (click)="confirmDelete(item.id)" class="action-icon mr-3" popover="Delete"
+               triggers="mouseenter:mouseleave"
+            ><span class="fa fa-trash-o icon"></span></a>
+
+            <a (click)="editItem(i)" class="action-icon" popover="Edit" triggers="mouseenter:mouseleave"
+            ><span class="fa fa-edit icon"></span></a>
+          </td>
+        </tr>
+<!--        <tr *ngIf="brands.length == 0">-->
+<!--          <td colspan="100%" class="no-data-available">No data available!</td>-->
+<!--        </tr>-->
+        </tbody>
+      </table>
+      <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <p style="color: white"> Loading... </p></ngx-spinner>
+    </div>
+  </div>
+</div>
+
+
+<div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" (onHide)="resetForm()">
+  <div class="modal-dialog modal-primary modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">{{isEdit?'Update':'Add New'}} Item</h4>
+        <button type="button" class="close" (click)="modal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <form [formGroup]="form">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" formControlName="name" id="name">
+                  <span class="error-msg p-b-0"
+                        *ngIf="isControlHasError('name','required')">This field is required</span>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label class="" for="groupTypeId">select Group Type</label>
+                  <div class="">
+                    <select id="groupTypeId" formControlName="group_type_id" name="group_type_id" class="form-control">
+                      <option value="{{type.group_type_id}}" *ngFor="let type of groupTypes">{{type.group_type_name}}</option>
+                    </select>
+                    <span class="error-msg p-b-0"
+                          *ngIf="isControlHasError('group_type_id','required')">This field is required</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+
+                <div class="form-group">
+                  <label for="maximumMembers">Maximum Members</label>
+                  <input type="number" class="form-control" formControlName="maximum_members" id="maximumMembers">
+                  <span class="error-msg p-b-0"
+                        *ngIf="isControlHasError('maximum_members','required')">This field is required</span>
+                </div>
+              </div>
+
+            </div><!--/.row-->
+
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <app-spinner [show]="addLoading"></app-spinner>
+        <button type="button" class="btn btn-secondary" (click)="modal.hide()">Close</button>
+        <button type="submit" (click)="onSubmit()" class="btn btn-primary">{{isEdit?'Update':'Save'}}</button>
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #confirmModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Alert</h4>
+        <button type="button" class="close" (click)="confirmModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are tou sure you want to delete this item?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="deleteItem(false)">Close</button>
+        <button type="button" class="btn btn-danger" (click)="deleteItem(true)">Delete</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!--<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>-->
+

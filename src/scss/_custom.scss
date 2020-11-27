@@ -1,0 +1,85 @@
+// Here you can add other styles
+
+.error-msg {
+  color: red;
+  font-size: 11px;
+  position: absolute;
+  font-weight: 500;
+  display: block;
+  bottom: -20px;
+}
+
+table.dataTable{
+
+  th,td{
+    vertical-align: middle;
+  }
+  .img-table{
+    width: 40px;
+  }
+
+  .action-icon{
+    .icon{
+      font-size: 19px;
+      cursor: pointer;
+    }
+  }
+
+}
+
+.no-data-available{
+  text-align: center;
+  font-size: 16px;
+  padding-top: 19px;
+  font-weight: bold;
+  color: grey;
+  text-transform: capitalize;
+}
+
+.file-upload{
+  //border: solid 1px #707070;
+  //text-align: right;
+  //margin-top: 37px;
+  //padding: 10px 15px 0px 15px;
+
+  .uploadFile{
+    display: none;
+  }
+
+  label{
+    cursor: pointer;
+  }
+  .icon{
+    color: var(--bold-grey);
+    transform: rotateZ(-106deg);
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  .txt{
+    //color: var(--green);
+    text-transform: uppercase;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+}
+
+.p-b-0{
+  bottom: 0 !important;
+}
+
+
+app-spinner {
+  width: 50px;
+  background-color: transparent;
+  svg {
+    width: 30px;
+    height: 25px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.check-icon.file-upload-success, .check-icon.file-upload-error{
+  font-size: 16px;
+  margin-left: 3px;
+}

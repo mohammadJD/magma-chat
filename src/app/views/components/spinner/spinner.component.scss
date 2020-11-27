@@ -1,0 +1,9 @@
+.spinner{
+  display: none;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.spinner.show{
+  display: inline-block !important;
+}
